@@ -39,12 +39,12 @@ jobs:
       # Step 5: Build the Docker image and tag it with 'latest'
       - name: Build Docker image
         run: |
-          docker build -t 058264270514.dkr.ecr.eu-central-1.amazonaws.com/atanor-container:latest .
+          docker build -t 058264270514.dkr.ecr.eu-central-1.amazonaws.com/atanor_application:latest .
 
       # Step 6: Push the Docker image to Amazon ECR
       - name: Push Docker image to ECR
         run: |
-          docker push 058264270514.dkr.ecr.eu-central-1.amazonaws.com/atanor-container:latest
+          docker push 058264270514.dkr.ecr.eu-central-1.amazonaws.com/atanor_application:latest
 
       # Step 7: Log out of Docker (optional for cleanup)
       - name: Log out of Docker
