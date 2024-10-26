@@ -31,22 +31,30 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-      # Step 4: Log in to Amazon ECR
+       # Step 4: Install and configure the Amazon ECR credential helper for secure login
+       # This configures Docker to use the ECR credential helper instead of storing credentials in plain text
+      - name: Set up ECR credential helper
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y amazon-ecr-credential-helper
+          echo '{ "credsStore": "ecr-login" }' > ~/.docker/config.json
+        
+     # Step 5: Log in to Amazon ECR to allow pushing Docker images securely
       - name: Log in to Amazon ECR
         run: |
           aws ecr get-login-password --region eu-central-1 | \
           docker login --username AWS --password-stdin 058264270514.dkr.ecr.eu-central-1.amazonaws.com
-
-      # Step 5: Build the Docker image and tag it with 'latest'
+        
+      # Step 6: Build the Docker, push the image and tag it with 'latest'
       - name: Build Docker image
         run: |
           docker build -t 058264270514.dkr.ecr.eu-central-1.amazonaws.com/atanor_application:latest stable/
 
-      # Step 6: Push the Docker image to Amazon ECR
+      # Step 7: Push the Docker image to Amazon ECR
       - name: Push Docker image to ECR
         run: |
           docker push 058264270514.dkr.ecr.eu-central-1.amazonaws.com/atanor_application:latest
-
-      # Step 7: Log out of Docker (optional for cleanup)
+        
+      # Step 8: Log out of Docker (optional for cleanup)
       - name: Log out of Docker
         run: docker logout
