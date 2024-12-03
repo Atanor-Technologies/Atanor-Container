@@ -4,12 +4,14 @@ ENV IBC_VERSION=3.20.0
 
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
-    ca-certificates git libxtst6 libgtk-3-0 openbox procps python3.11 python3.11-venv socat tigervnc-standalone-server unzip wget2 xterm \
-    # https://github.com/extrange/ibkr-docker/issues/74
+    ca-certificates git libxtst6 libgtk-3-0 openbox procps python3 python3-venv socat tigervnc-standalone-server unzip wget2 xterm \
     libasound2 \
     libnss3 \
     libgbm1 \
-    libnspr4
+    libnspr4 && \
+    # Ensure Python3 points to the latest version and clean up
+    update-alternatives --install /usr/bin/python python /usr/bin/python3 1 && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Setup noVNC for browser VNC access
 RUN git clone --depth 1 https://github.com/novnc/noVNC.git && \
