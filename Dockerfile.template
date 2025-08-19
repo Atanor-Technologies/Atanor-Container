@@ -1,4 +1,4 @@
-FROM debian:12 AS setup
+FROM debian:13 AS setup
 
 ENV IBC_VERSION=3.20.0
 
