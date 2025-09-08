@@ -22,7 +22,7 @@ jobs:
 
       # Step 2: Configure AWS credentials using OIDC to assume the ECR_Update role
       - name: Configure AWS credentials using OIDC
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v5
         with:
           role-to-assume: arn:aws:iam::058264270514:role/ECR_Update
           aws-region: eu-central-1  # Set to the correct region: eu-central-1 (Frankfurt)
